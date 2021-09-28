@@ -10,17 +10,27 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float JumpForce = 1;
     private Rigidbody2D rb;
+    private SpriteRenderer srender;
 
     void Start()
     {
         transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
+        srender = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        transform.position +=  new Vector3(0.01f, 0, 0) * Speed;
-        if (Input.GetKeyDown(KeyCode.Space))
-             rb.AddForce(Vector2.up * JumpForce);
+        float axes = Input.GetAxis("Horizontal");
+        if (axes > 0)
+        {
+            srender.flipX = true;
+        } 
+        else if (axes < 0)
+        {
+            srender.flipX = false;
+        }
+
+        transform.Translate(new Vector3(axes*Speed, 0, 0));
     }
 }
