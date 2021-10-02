@@ -6,11 +6,12 @@ public class Player : MonoBehaviour
 {
     private Transform transform;
     [SerializeField]
-    private float Speed = 1;
+    private float Speed = 0.001f;
     [SerializeField]
     private float JumpForce = 1;
     private Rigidbody2D rb;
     private SpriteRenderer srender;
+    
 
     void Start()
     {
@@ -32,5 +33,10 @@ public class Player : MonoBehaviour
         }
 
         transform.Translate(new Vector3(axes*Speed, 0, 0));
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector2.up*JumpForce);
+        }
+
     }
 }

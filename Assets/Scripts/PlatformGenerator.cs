@@ -23,7 +23,7 @@ public class PlatformGenerator : MonoBehaviour
 
     void Update()
     {
-        if (startPosition.x + distance.x < transform.position.x) generatePlatform();
+        if (startPosition.y + distance.y < transform.position.y) generatePlatform();
     }
 
     private void generatePlatform()
