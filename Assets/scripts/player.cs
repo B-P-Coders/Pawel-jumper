@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private float JumpForce = 1;
     private Rigidbody2D rb;
     private SpriteRenderer srender;
-    
+    private bool canJump;
 
     void Start()
     {
@@ -33,10 +33,18 @@ public class Player : MonoBehaviour
         }
 
         transform.Translate(new Vector3(axes*Speed, 0, 0));
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             rb.AddForce(Vector2.up*JumpForce);
         }
 
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        canJump = true;
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        canJump = false;
     }
 }
