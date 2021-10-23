@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -12,12 +13,15 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer srender;
     private bool canJump;
-
+    [SerializeField]
+    private Text scoreText; 
+    private int score; 
     void Start()
     {
         transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         srender = GetComponent<SpriteRenderer>();
+        scoreText.text = "Wynik: 0" ;
     }
 
     void Update()
@@ -42,6 +46,21 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         canJump = true;
+        updateScore(collision);
+    }
+    
+    private void updateScore(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Platform") )
+        {
+            Platform platform = collision.collider.GetComponent<Platform>();
+            if (platform.getActive())
+            {
+                score++;
+                platform.disactivated();
+            }
+            scoreText.text = "Wynik: " +  score;
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
